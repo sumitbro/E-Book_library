@@ -13,6 +13,7 @@ class ShippingForm(forms.ModelForm):
     class Meta:
         model= Shipping
         fields= '__all__'
+        exclude = ['user', 'item', 'order']
 
     # address1= forms.CharField()
     # address2= forms.CharField(required=False)

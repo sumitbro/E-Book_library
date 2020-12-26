@@ -124,20 +124,18 @@ def cart(request):
 
 
 def shipping(request):
-    
-    if request.method=='POST':
-        form= ShippingForm(request.POST)
-        
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            form= ShippingForm(request.POST)
         # order= Order.objects.get(user=self.request.user, ordered=False)
-        if form.is_valid():
-            form.save()
-            print("data saved")
-            return redirect('/shipping')
-        
-    
-    context={'form': form}
-
-    return render(request, 'checkout.html', context)
+            if form.is_valid():
+                form.save()
+                print("data saved")
+                messages.info(request, "Order successfull")
+                return redirect('/shipping')
+        form= ShippingForm()
+        context={'form': form}
+        return render(request, 'checkout.html', context)
     
 # class ShippingView(View):
 #     def get(self, *args, **kwargs):
