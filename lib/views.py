@@ -9,16 +9,56 @@ from django.http import HttpResponse
 from .models import *
 from .forms import ShippingForm
 # Create your views here.
-def home(request):
 
+
+def home(request):
     item= Item.objects.all()
+    item1= Item.objects.filter(category_id=1)[:6]
+    item2= Item.objects.filter(category_id=2)[:6]
+    item3= Item.objects.filter(category_id=3)[:6]
+
+
+    
     context={
-        'item':item
+        
+        'item':item,
+        'item1':item1,
+        'item2':item2,
+        'item3':item3
     }
 
     return render(request, 'index.html', context)
 
 
+def all_product(request):
+    item= Item.objects.all()
+    item1= Item.objects.filter(category_id=1)
+    item2= Item.objects.filter(category_id=2)
+    item3= Item.objects.filter(category_id=3)
+
+
+    
+    context={
+        
+        'item':item,
+        'item1':item1,
+        'item2':item2,
+        'item3':item3
+    }
+
+
+    # item= None
+
+    # category= Category.objects.all()
+    # categoryID= request.GET.get('category')
+    # if categoryID:
+    #     category= Item.get_item_by_category_id(categoryID)
+    # else:
+    #     item= Item.objects.all()
+
+    
+
+    return render(request, 'all_product.html', context)
 
 
 def singleproduct(request,id):
@@ -135,7 +175,7 @@ def shipping(request):
                 return redirect('/shipping')
         form= ShippingForm()
         context={'form': form}
-        return render(request, 'checkout.html', context)
+    return render(request, 'checkout.html', context)
     
 # class ShippingView(View):
 #     def get(self, *args, **kwargs):

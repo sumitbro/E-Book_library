@@ -6,7 +6,15 @@ from django_countries.fields import CountryField
 
 
 # Create your models here.
+class Category(models.Model):
+    name=models.CharField(max_length=200, null=True)
+    def __str__(self):
+        return self.name
+
+
+
 class Item(models.Model):
+    category= models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     title= models.CharField(max_length=50, null= True)
     price= models.FloatField(null=True)
     img= models.ImageField(upload_to='pics')
@@ -15,11 +23,20 @@ class Item(models.Model):
     def __str__(self):
         return self.title
 
+    def get_item_by_category_id(category_id):
+        if category_id:
+            return Item.objects.filter(category=category_id)
+        else:
+            return Item.objects.all()
+
 
     # def get_add_to_cart_url(self):
     #     return reverse("lib:add_to_cart", kwargs={
     #         'id':self.id
     #     })
+
+
+
 
 
 class Orderitem(models.Model):
