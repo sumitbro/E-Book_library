@@ -8,6 +8,8 @@ from django.urls import reverse
 from django.http import HttpResponse
 from .models import *
 from .forms import ShippingForm
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -190,4 +192,23 @@ def shipping(request):
 #             print("correct")
 #             return redirect('/shipping')
 
-        
+
+
+def search_item(request):
+    if request.method=="POST":
+        search=request.POST['search_item']
+        if search:
+                  data= Item.objects.filter(Q(title__icontains=search))
+                  if data:
+                    return render(request, 'search.html', {'sr':data})
+                  else:
+                      messages.info(request, "No result Found")
+                    #   messages.error(request, 'No result found')
+                      return redirect('/')
+
+        else:
+            return HttpResponseRedirect("/search_item")
+
+
+    else:
+        return render(request, 'search.html')
