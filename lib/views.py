@@ -49,15 +49,6 @@ def all_product(request):
     }
 
 
-    # item= None
-
-    # category= Category.objects.all()
-    # categoryID= request.GET.get('category')
-    # if categoryID:
-    #     category= Item.get_item_by_category_id(categoryID)
-    # else:
-    #     item= Item.objects.all()
-
     
 
     return render(request, 'all_product.html', context)
@@ -179,18 +170,6 @@ def shipping(request):
         context={'form': form}
     return render(request, 'checkout.html', context)
     
-# class ShippingView(View):
-#     def get(self, *args, **kwargs):
-#         form= ShippingForm()
-#         context={'form': form}
-
-#         return render(self.request, 'checkout.html', context)
-    
-#     def post(self, *args, **kwargs):
-#         form= ShippingForm(self.request.POST or None)
-#         if form.is_valid():
-#             print("correct")
-#             return redirect('/shipping')
 
 
 
